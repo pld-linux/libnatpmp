@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Biblioteka i program kliencki protokołu NAT Port Mapping Pro
 Name:		libnatpmp
 Version:	0
 %define	subver	20120821
-Release:	0.%{subver}.1
+Release:	0.%{subver}.2
 License:	BSD
 Group:		Libraries
 Source0:	http://miniupnp.tuxfamily.org/files/%{name}-%{subver}.tar.gz
