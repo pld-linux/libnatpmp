@@ -1,4 +1,4 @@
-%define	rel		2
+%define	rel	3
 %define	subver	20120821
 Summary:	NAT Port Mapping Protocol library and client
 Summary(pl.UTF-8):	Biblioteka i program kliencki protokołu NAT Port Mapping Protocol
@@ -66,7 +66,7 @@ Wiązanie Pythona do biblioteki libnatpmp.
 	CFLAGS="%{rpmcflags} -fPIC -Wall -DENABLE_STRNATPMPERR"
 
 export CFLAGS="%{rpmcflags}"
-%{__python} setup.py build
+%py_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -82,9 +82,7 @@ mv $RPM_BUILD_ROOT%{_libdir}/libnatpmp.so.{1,1.0}
 # omitted by Makefile
 install -D natpmpc.1 $RPM_BUILD_ROOT%{_mandir}/man1/natpmpc.1
 
-%{__python} setup.py install \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
