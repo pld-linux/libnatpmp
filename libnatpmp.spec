@@ -1,5 +1,5 @@
-%define	rel	3
-%define	subver	20120821
+%define	rel	1
+%define	subver	20150609
 Summary:	NAT Port Mapping Protocol library and client
 Summary(pl.UTF-8):	Biblioteka i program kliencki protokołu NAT Port Mapping Protocol
 Name:		libnatpmp
@@ -8,7 +8,7 @@ Release:	0.%{subver}.%{rel}
 License:	BSD
 Group:		Libraries
 Source0:	http://miniupnp.tuxfamily.org/files/%{name}-%{subver}.tar.gz
-# Source0-md5:	d2b9c2dedba3a00deb0e7589982ceced
+# Source0-md5:	7bd1af6710271e1743df5422be350bd8
 URL:		http://miniupnp.tuxfamily.org/libnatpmp.html
 BuildRequires:	/sbin/ldconfig
 BuildRequires:	python-devel
@@ -76,7 +76,7 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALLDIRLIB=$RPM_BUILD_ROOT%{_libdir}
 
 # let SONAME be the symlink
-mv $RPM_BUILD_ROOT%{_libdir}/libnatpmp.so.{1,1.0}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/libnatpmp.so.{1,1.0}
 /sbin/ldconfig -n $RPM_BUILD_ROOT%{_libdir}
 
 # omitted by Makefile
