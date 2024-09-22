@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	python	# CPython (2.x) module
 
-%define	rel	1
+%define	rel	2
 %define	subver	20230423
 Summary:	NAT Port Mapping Protocol library and client
 Summary(pl.UTF-8):	Biblioteka i program kliencki protokołu NAT Port Mapping Protocol
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALLPREFIX=$RPM_BUILD_ROOT%{_prefix} \
 	INSTALLDIRLIB=$RPM_BUILD_ROOT%{_libdir}
 
+# missing in make install
+cp -p natpmp_declspec.h $RPM_BUILD_ROOT%{_includedir}
+
 # let SONAME be the symlink
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/libnatpmp.so.{1,1.0}
 /sbin/ldconfig -n $RPM_BUILD_ROOT%{_libdir}
@@ -113,6 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libnatpmp.so
 %{_includedir}/natpmp.h
+%{_includedir}/natpmp_declspec.h
 
 %files static
 %defattr(644,root,root,755)
