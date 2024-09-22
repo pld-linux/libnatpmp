@@ -1,5 +1,9 @@
+#
+# Conditional build:
+%bcond_without	python	# CPython (2.x) module
+
 %define	rel	1
-%define	subver	20150609
+%define	subver	20230423
 Summary:	NAT Port Mapping Protocol library and client
 Summary(pl.UTF-8):	Biblioteka i program kliencki protokołu NAT Port Mapping Protocol
 Name:		libnatpmp
@@ -8,10 +12,13 @@ Release:	0.%{subver}.%{rel}
 License:	BSD
 Group:		Libraries
 Source0:	http://miniupnp.tuxfamily.org/files/%{name}-%{subver}.tar.gz
-# Source0-md5:	7bd1af6710271e1743df5422be350bd8
+# Source0-md5:	85baa91ffd6a75f411e387f1bfbb1b12
 URL:		http://miniupnp.tuxfamily.org/libnatpmp.html
 BuildRequires:	/sbin/ldconfig
-BuildRequires:	python-devel
+%if %{with python}
+BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	python-setuptools
+%endif
 BuildRequires:	rpm-pythonprov
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,8 +72,10 @@ Wiązanie Pythona do biblioteki libnatpmp.
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fPIC -Wall -DENABLE_STRNATPMPERR"
 
+%if %{with python}
 export CFLAGS="%{rpmcflags}"
 %py_build
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -82,7 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 # omitted by Makefile
 install -D natpmpc.1 $RPM_BUILD_ROOT%{_mandir}/man1/natpmpc.1
 
+%if %{with python}
 %py_install
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -107,9 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libnatpmp.a
 
+%if %{with python}
 %files -n python-libnatpmp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/libnatpmp.so
-%if "%{py_ver}" > "2.4"
 %{py_sitedir}/libnatpmp-1.0-py*.egg-info
 %endif
